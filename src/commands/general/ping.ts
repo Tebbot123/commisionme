@@ -1,9 +1,5 @@
 import { SlashCommand } from 'Classes/Command'
-import {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    type ChatInputApplicationCommandData,
-} from 'discord.js'
+import { SlashCommandBuilder } from 'discord.js'
 
 const commandData = new SlashCommandBuilder()
     .setName('ping')

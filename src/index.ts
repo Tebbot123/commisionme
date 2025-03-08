@@ -21,7 +21,7 @@ import fs from 'node:fs'
 import { SlashCommand } from 'Classes/Command'
 
 // Setup .env files
-dotenv.config()
+dotenv.config({ path: '.env.development.local' })
 
 if (!process.env.DISCORD_TOKEN) {
     console.error('THERE IS NO DISCORD BOT TOKEN!!')
@@ -54,7 +54,7 @@ console.log(
 
 // Command Handler
 
-const commandsCollection = new Collection() // Collection for commands
+const commandsCollection = new Collection<string, SlashCommand>() // Collection for commands
 const commandsArray = []
 
 const foldersPath = path.join(__dirname, 'commands')
@@ -84,7 +84,9 @@ for (const folder of commandFolders) {
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return
 
-    const command = commandsCollection.get(interaction.commandName)
+    const command = commandsCollection.get(
+        interaction.commandName,
+    ) as SlashCommand
     if (!command) {
         console.error(`No command matching ${interaction.commandName}...`)
     }
